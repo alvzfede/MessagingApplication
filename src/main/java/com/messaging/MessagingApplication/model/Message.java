@@ -29,6 +29,4 @@ public class Message {
     @Column(name = "MESSAGE", nullable = false)
     private String message;
 
-
-
 }
