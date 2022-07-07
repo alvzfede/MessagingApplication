@@ -42,7 +42,7 @@ public class MessageController {
         return VIEWED;
     }
 
-    @DeleteMapping()
+    @DeleteMapping(value = "/{idMessage}")
     public String delete(@PathVariable Long idMessage){
         messageService.delete(idMessage);
         return REMOVED;
