@@ -1,5 +1,6 @@
 package com.messaging.MessagingApplication.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,14 +18,15 @@ public class Message {
 
     @ManyToOne
     @JoinColumn(name = "SENDER_ID")
+    @JsonIgnore
     private User sender;
 
     @ManyToOne
     @JoinColumn(name = "RECEIVER_ID")
     private User receiver;
 
-    @Column(name = "IS_READED", nullable = false)
-    private boolean readed;
+    @Column(name = "IS_VIEWED", nullable = false)
+    private boolean viewed;
 
     @Column(name = "MESSAGE", nullable = false)
     private String message;

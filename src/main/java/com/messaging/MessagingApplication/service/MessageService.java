@@ -8,6 +8,8 @@ public interface MessageService {
 
     Message save(String usrNameSource,String usrNameTarget, String message);
     void delete(Long id);
-    List<Message> getAll(Long userId);
+    List<Message> getAll(String username);
+
+    void markAsViewed(Long idMessage);
 
 }

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -36,7 +35,7 @@ public class MessageServiceImpl implements MessageService {
 
         Message msg = new Message();
         msg.setMessage(message);
-        msg.setReaded(false);
+        msg.setViewed(false);
         msg.setSender(sourceUsr.get());
         msg.setReceiver(targetUsr.get());
 
@@ -45,11 +44,27 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void delete(Long id) {
-
+        Optional<Message> message = messageRepository.findById(id);
+        if(!message.isPresent())
+            throw new IllegalArgumentException("Message not exists.");
+        messageRepository.delete(message.get());
     }
 
     @Override
-    public List<Message> getAll(Long userId) {
-        return null;
+    public List<Message> getAll(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if(!user.isPresent())
+            throw new IllegalArgumentException("Username not exists.");
+        return messageRepository.findByReceiver(user.get());
+    }
+
+    @Override
+    public void markAsViewed(Long idMessage) {
+        Optional<Message> message = messageRepository.findById(idMessage);
+        if(!message.isPresent())
+            throw new IllegalArgumentException("Message not exists.");
+
+        message.get().setViewed(true);
+        messageRepository.save(message.get());
     }
 }
